@@ -3,6 +3,8 @@ import socket
 import json
 from threading import Thread
 
+from pygame.examples.video import backgrounds
+
 # ---ПУГАМЕ НАЛАШТУВАННЯ ---
 WIDTH, HEIGHT = 800, 600
 init()
@@ -41,7 +43,9 @@ def receive():
 font_win = font.Font(None, 72)
 font_main = font.Font(None, 36)
 # --- ЗОБРАЖЕННЯ ----
+background = image.load("img.png")
 
+background = transform.scale(background, (WIDTH, HEIGHT))
 # --- ЗВУКИ ---
 
 # --- ГРА ---
@@ -88,6 +92,7 @@ while True:
         continue  # Блокує гру після перемоги
 
     if game_state:
+        screen.blit(backround, (0, 0))
         screen.fill((30, 30, 30))
         draw.rect(screen, (0, 255, 0), (20, game_state['paddles']['0'], 20, 100))
         draw.rect(screen, (255, 0, 255), (WIDTH - 40, game_state['paddles']['1'], 20, 100))
