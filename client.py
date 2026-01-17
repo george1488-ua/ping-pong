@@ -2,12 +2,14 @@ from pygame import *
 import socket
 import json
 from threading import Thread
+from menu import get_connection
 
-from pygame.examples.video import backgrounds
+SERVER_HOST, SERVER_PORT = get_connection()
 
 # ---ПУГАМЕ НАЛАШТУВАННЯ ---
 WIDTH, HEIGHT = 800, 600
 init()
+mixer.init()
 screen = display.set_mode((WIDTH, HEIGHT))
 clock = time.Clock()
 display.set_caption("Пінг-Понг")
@@ -16,7 +18,7 @@ def connect_to_server():
     while True:
         try:
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client.connect(('localhost', 8080)) # ---- Підключення до сервера
+            client.connect((SERVER_HOST, SERVER_PORT)) # ---- Підключення до сервера
             buffer = ""
             game_state = {}
             my_id = int(client.recv(24).decode())
@@ -56,7 +58,7 @@ platform2 = image.load("img_1.png")
 platform2 = transform.scale(platform2, (20, 100))
 platform2 = transform.flip(platform2, 1, 0)
 # --- ЗВУКИ ---
-
+hit = mixer.Sound("angry-birds-laugh.mp3")
 # --- ГРА ---
 game_over = False
 winner = None
@@ -111,10 +113,10 @@ while True:
 
         if game_state['sound_event']:
             if game_state['sound_event'] == 'wall_hit':
-                # звук відбиття м'ячика від стін
+                hit.play()
                 pass
             if game_state['sound_event'] == 'platform_hit':
-                # звук відбиття м'ячика від платформи
+                hit.play()
                 pass
 
     else:
