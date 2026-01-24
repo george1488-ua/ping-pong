@@ -59,6 +59,9 @@ platform2 = transform.scale(platform2, (20, 100))
 platform2 = transform.flip(platform2, 1, 0)
 # --- ЗВУКИ ---
 hit = mixer.Sound("angry-birds-laugh.mp3")
+
+mixer.music.load("angry-birds-theme-song-audiotrimmer.mp3")
+mixer.music.play(-1)
 # --- ГРА ---
 game_over = False
 winner = None
